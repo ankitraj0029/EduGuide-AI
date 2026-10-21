@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduGuide AI | After 12th Guidance</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f6fc;
+      color: #18243b;
+    }
+    header {
+      background: linear-gradient(120deg, #143c8c, #3978ed);
+      color: white;
+      padding: 28px 18px;
+      text-align: center;
+    }
+    header h1 { margin: 0 0 10px; font-size: 30px; }
+    header p { margin: 0; line-height: 1.6; }
+    main { max-width: 900px; margin: 24px auto; padding: 0 14px; }
+    .panel {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 5px 20px #1c326510;
+    }
+    h2 { margin-top: 0; color: #17469b; }
+    .courses {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 12px;
+    }
+    .course {
+      background: #edf3ff;
+      padding: 14px;
+      border-radius: 12px;
+      line-height: 1.5;
+    }
+    .course strong { display: block; color: #16469b; margin-bottom: 5px; }
+    #chat {
+      height: 300px;
+      overflow-y: auto;
+      border: 1px solid #dce4f1;
+      border-radius: 12px;
+      padding: 12px;
+      background: #fbfcff;
+    }
+    .message {
+      padding: 10px 13px;
+      border-radius: 12px;
+      margin: 8px 0;
+      max-width: 90%;
+      white-space: pre-wrap;
+      line-height: 1.5;
+    }
+    .bot { background: #e7efff; }
+    .user { background: #d9f8e7; margin-left: auto; }
+    .controls { display: flex; gap: 8px; margin-top: 12px; }
+    input {
+      min-width: 0;
+      flex: 1;
+      padding: 13px;
+      border: 1px solid #cbd5e5;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+    button {
+      border: 0;
+      background: #225ed1;
+      color: white;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    button:hover { background: #17469b; }
+    .suggestions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .suggestions button {
+      background: white;
+      color: #17469b;
+      border: 1px solid #b8cdf6;
+      font-size: 13px;
+    }
+    .note { font-size: 13px; line-height: 1.6; color: #5b6578; }
+    footer { text-align: center; padding: 20px; color: #647087; font-size: 13px; }
+    @media (max-width: 480px) {
+      header h1 { font-size: 25px; }
+      .controls { flex-direction: column; }
+      .controls button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🎓 EduGuide AI</h1>
+    <p>Your course and career guide after Class 12</p>
+    <p>Explore courses, eligibility, entrance exams and career options.</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Explore Courses</h2>
+      <div class="courses">
+        <div class="course"><strong>Science</strong>B.Tech, B.Sc., MBBS, BCA and more</div>
+        <div class="course"><strong>Commerce</strong>B.Com, BBA, CA pathway and more</div>
+        <div class="course"><strong>Arts / Humanities</strong>BA, law pathways, design and more</div>
+        <div class="course"><strong>Career Skills</strong>IT, business, creative and technical careers</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Chat with EduGuide</h2>
+      <div id="chat" aria-live="polite">
+        <div class="message bot">Hello! 👋 I can help you explore courses after Class 12.
+
+Tell me your stream (Science, Commerce or Arts), your interests, or ask about a course.</div>
+      </div>
+
+      <div class="suggestions">
+        <button onclick="ask('Courses after 12th Science')">Science courses</button>
+        <button onclick="ask('Courses after Commerce')">Commerce courses</button>
+        <button onclick="ask('Courses after Arts')">Arts courses</button>
+        <button onclick="ask('How do I choose a career?')">Career guidance</button>
+        <button onclick="ask('What is BCA?')">What is BCA?</button>
+      </div>
+
+      <form class="controls" id="chatForm">
+        <input id="question" placeholder="Ask about courses or careers..." autocomplete="off" required>
+        <button type="submit">Send</button>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2>How to choose the right course</h2>
+      <ol>
+        <li>Identify your interests and favourite subjects.</li>
+        <li>Check course eligibility and required subjects.</li>
+        <li>Compare course duration, fees and learning requirements.</li>
+        <li>Research career opportunities and entrance examinations.</li>
+        <li>Verify current admission details on official websites.</li>
+      </ol>
+      <p class="note">Educational guidance only. Eligibility, fees, entrance exams and admission rules vary by institution and year.</p>
+    </section>
+  </main>
+
+  <footer>EduGuide AI | Student Course Guidance Project</footer>
+
+  <script>
+    const chat = document.getElementById("chat");
+    const input = document.getElementById("question");
+    const form = document.getElementById("chatForm");
+
+    function addMessage(text, type) {
+      const message = document.createElement("div");
+      message.className = "message " + type;
+      message.textContent = text;
+      chat.appendChild(message);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function getAnswer(question) {
+      const q = question.toLowerCase();
+
+      if (q.includes("science") && (q.includes("course") || q.includes("after") || q.includes("12"))) {
+        return "After Class 12 Science, options may include:\n• PCM: B.Tech, B.E., B.Sc., BCA, architecture pathways and more.\n• PCB: MBBS, BDS, nursing, pharmacy, life sciences and more.\n• PCMB: options from both groups, subject to eligibility.\n\nYour exact options depend on your subjects, marks and entrance-exam requirements. Are you from PCM, PCB or PCMB?";
+      }
+
+      if (q.includes("commerce")) {
+        return "Possible options after Commerce include:\n• B.Com or B.Com (Hons.)\n• BBA or management courses\n• CA, CS or CMA professional pathways\n• Economics, finance and accounting courses\n• Law or other degree programmes where eligible.\n\nCheck each institution's eligibility and admission rules.";
+      }
+
+      if (q.includes("arts") || q.includes("humanities")) {
+        return "Possible options after Arts/Humanities include:\n• BA programmes\n• Journalism and mass communication\n• Psychology and social sciences\n• Design and fine arts\n• Law pathways and hotel management.\n\nEligibility varies by course and institution.";
+      }
+
+      if (q.includes("bca")) {
+        return "BCA stands for Bachelor of Computer Applications. It focuses on computing, programming, databases and software fundamentals. Eligibility requirements vary by college; some require Mathematics or specific subjects, while others do not. Check the current admission criteria.";
+      }
+
+      if (q.includes("b.tech") || q.includes("engineering")) {
+        return "B.Tech is an undergraduate engineering degree, commonly lasting four years in India. Branches include Computer Science, IT, Mechanical, Civil, Electrical and Electronics. Admission may involve JEE, state-level exams or institute-specific processes. Verify the current requirements for your target colleges.";
+      }
+
+      if (q.includes("mbbs") || q.includes("medical")) {
+        return "MBBS is a medical degree for students pursuing a career as a doctor. In India, admission generally requires the relevant Class 12 science subjects and qualifying through NEET-UG, subject to current official rules. Other healthcare options include nursing, pharmacy, physiotherapy and life sciences, each with its own eligibility.";
+      }
+
+      if (q.includes("entrance") || q.includes("exam")) {
+        return "Entrance exams depend on the course. Examples include JEE for many engineering admissions, NEET-UG for undergraduate medical admissions, and CUET-UG for participating universities and programmes. Always check the official exam and college websites for current dates, eligibility and application details.";
+      }
+
+      if (q.includes("career") || q.includes("choose") || q.includes("guidance")) {
+        return "Let's find a suitable direction. Consider:\n1. Which stream did you study: Science, Commerce or Arts?\n2. Which subjects do you enjoy?\n3. What interests you most: technology, healthcare, business, creativity or public service?\n4. Do you prefer a degree, a professional qualification or a skill-based pathway?\n\nShare your answers and I can suggest options to research.";
+      }
+
+      if (q.includes("fee") || q.includes("fees") || q.includes("cost")) {
+        return "Course fees vary significantly by college, location, course and category. Compare tuition, accommodation, exam charges, scholarships and other expenses on official institution websites. Tell me the course and college or city you are considering for more focused guidance.";
+      }
+
+      if (q.includes("duration") || q.includes("years")) {
+        return "Course duration depends on the programme. Many bachelor's degrees take 3–4 years, B.Tech commonly takes 4 years, and professional or medical pathways can take longer. Check the current structure for the specific course and institution.";
+      }
+
+      if (q.includes("hello") || q.includes("hi") || q.includes("hey")) {
+        return "Hello! Welcome to EduGuide AI. Which stream did you study after Class 10, and what would you like to explore after Class 12?";
+      }
+
+      return "I can help with course options, career choices, BCA, engineering, medical pathways, entrance exams, course duration and fees. To guide you better, tell me your Class 12 stream, favourite subjects and career interests.";
+    }
+
+    function ask(text) {
+      input.value = text;
+      form.requestSubmit();
+    }
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const question = input.value.trim();
+      if (!question) return;
+
+      addMessage(question, "user");
+      const answer = getAnswer(question);
+      addMessage(answer, "bot");
+      input.value = "";
+      input.focus();
+    });
+  </script>
+</body>
+</html>
